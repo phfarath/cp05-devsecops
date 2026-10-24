@@ -1,0 +1,9 @@
+title = "CP05 - regras padrao e segredo ficticio de demonstracao"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "cp05-segredo-ficticio"
+description = "Marcador didatico sem acesso a nenhum servico real"
+regex = '''CP05_TEST_SECRET_[A-Z0-9]{24}'''

@@ -1,0 +1,6 @@
+.env
+.env.*
+*.pem
+credentials*
+evidencias/
+__pycache__/

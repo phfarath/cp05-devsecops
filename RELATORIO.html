@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><title>CP05 - Relatório de evidências</title>
+<style>
+body{font:16px/1.65 Arial,sans-serif;color:#17263c;max-width:850px;margin:45px auto;padding:0 25px}h1{font-size:30px;line-height:1.2}h2{font-size:22px;border-bottom:2px solid #dbe4ef;padding-bottom:8px}.aviso{background:#fff0ca;padding:16px;border-left:4px solid #a66b00}.campo{color:#7a4900}figure{margin:20px 0;border:1px solid #c4cddd;padding:14px}img{width:100%;height:auto}figcaption{font-size:13px;color:#46556b}section{break-before:page}a{overflow-wrap:anywhere}@page{size:A4;margin:18mm}@media print{body{margin:0;padding:0;max-width:none}.aviso{background:white}}
+</style></head>
+<body>
+<h1>CP05: O pipeline DevSecOps completo</h1>
+<p>DevSecOps and Cloud Computing · Engenharia de Software</p>
+<p class="aviso"><strong>MODELO PENDENTE DE EVIDÊNCIAS.</strong> Preencha os campos e inclua os prints reais antes de exportar para entrega. Os parágrafos explicam a configuração; não certificam que os testes já foram executados.</p>
+<p>Aluno(a): <span class="campo">PREENCHER</span><br>RM e turma: <span class="campo">PREENCHER</span><br>Data da execução: <span class="campo">PREENCHER</span><br>Repositório: <span class="campo">PREENCHER URL</span></p>
+<h2>Objetivo e implementação</h2>
+<p>O projeto apresenta um site estático servido por um contêiner Nginx. O workflow security.yml executa três jobs independentes a cada push e pull request: Gitleaks, Semgrep e Trivy. As barreiras avaliam segredos no histórico, uso de eval no JavaScript e vulnerabilidades críticas nos componentes da imagem.</p>
+<p>O Trivy foi incluído para cobrir o cenário de imagem com CVE crítico, pois o enunciado menciona três jobs, mas nomeia apenas Gitleaks e Semgrep.</p>
+<h2>Execução da versão limpa</h2>
+<p>Link da execução: <span class="campo">PREENCHER</span><br>Commit e resultado observado: <span class="campo">PREENCHER</span></p>
+<figure><img src="evidencias/01-pipeline-limpo.png" alt="Inserir print real da execução da branch limpa"><figcaption>Figura 1. Resultados dos três jobs na versão sem sabotagem.</figcaption></figure>
+<section><h2>Barreira 1: Gitleaks</h2>
+<p>O Gitleaks procura padrões de segredos no histórico de commits alcançável pela branch analisada. O projeto mantém as regras padrão e acrescenta uma regra para um marcador fictício da CP05, sem acesso a qualquer serviço. O comando usa ocultação de valores nos logs e código de saída 1 quando encontra um segredo. No teste, um arquivo com esse marcador deve reprovar o job. A execução acontece após o push; a proteção de branch com checks obrigatórios é que permite impedir a integração de um pull request reprovado.</p>
+<p>Branch: teste/gitleaks<br>Link e commit: <span class="campo">PREENCHER</span><br>Regra, arquivo e resultado observado: <span class="campo">PREENCHER</span></p>
+<figure><img src="evidencias/02-gitleaks-bloqueio.png" alt="Inserir print real do Gitleaks detectando o marcador fictício"><figcaption>Figura 2. Log da detecção e resultado reprovado do Gitleaks.</figcaption></figure></section>
+<section><h2>Barreira 2: Semgrep</h2>
+<p>O Semgrep analisa o código JavaScript sem precisar executá-lo. A regra local cp05-no-eval identifica chamadas diretas a eval, que podem executar texto como código. O teste insere uma função que recebe uma entrada e a passa a eval. A opção --error transforma o achado em falha do job. Essa regra cobre o exemplo exigido na atividade, mas não detecta todas as classes de vulnerabilidades de uma aplicação.</p>
+<p>Branch: teste/semgrep<br>Link e commit: <span class="campo">PREENCHER</span><br>Arquivo, linha e resultado observado: <span class="campo">PREENCHER</span></p>
+<figure><img src="evidencias/03-semgrep-eval.png" alt="Inserir print real do Semgrep apontando eval"><figcaption>Figura 3. Achado de análise estática e reprovação do Semgrep.</figcaption></figure></section>
+<section><h2>Barreira 3: Trivy</h2>
+<p>O Trivy examina os componentes da imagem construída a partir do Dockerfile e consulta uma base de vulnerabilidades conhecidas. A configuração seleciona severidade CRITICAL e código de saída 1, inclusive para achados sem correção disponível. Assim, um CVE crítico detectado reprova o job. O resultado depende da versão da imagem e da base consultada no momento da análise. Uma falha de construção ou de download não demonstra a detecção de vulnerabilidade.</p>
+<p>Link e commit: <span class="campo">PREENCHER</span><br>Imagem, resultado e CVEs observados: <span class="campo">PREENCHER CONFORME O LOG</span></p>
+<figure><img src="evidencias/04-trivy.png" alt="Inserir print real do resultado da análise da imagem"><figcaption>Figura 4. Resultado da verificação da imagem Docker.</figcaption></figure>
+<h2>Conclusão</h2><p class="campo">PREENCHER após os testes: descreva os resultados efetivamente observados e qualquer limitação. Não declare uma execução aprovada sem evidência.</p>
+<h2>Referências</h2><p>Gitleaks: https://github.com/gitleaks/gitleaks<br>Semgrep: https://docs.semgrep.dev/cli-reference<br>Trivy: https://github.com/aquasecurity/trivy-action</p></section>
+</body></html>

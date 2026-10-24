@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CP05 | Pipeline DevSecOps</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+    <p class="tag">FIAP / ENGENHARIA DE SOFTWARE</p>
+    <h1>Segurança em cada alteração.</h1>
+    <p class="intro">CP05: um site em contêiner com verificações automáticas de segredos, código e vulnerabilidades da imagem.</p>
+    <section aria-label="Barreiras de segurança">
+      <article><span>01</span><h2>Gitleaks</h2><p>Procura segredos no histórico de commits da branch.</p></article>
+      <article><span>02</span><h2>Semgrep</h2><p>Analisa o JavaScript e identifica chamadas à função eval.</p></article>
+      <article><span>03</span><h2>Trivy</h2><p>Verifica os componentes da imagem Docker em busca de CVEs críticos.</p></article>
+    </section>
+    <button id="explicar" type="button" aria-expanded="false" aria-controls="detalhe">Como o pipeline funciona?</button>
+    <p id="detalhe" hidden>Um push ou pull request inicia os três jobs no GitHub Actions. Um achado de segurança reprova a verificação correspondente. Os resultados reais ficam na aba Actions do repositório.</p>
+    <footer>DevSecOps and Cloud Computing · Checkpoint 05</footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,6 @@
+rules:
+  - id: cp05-no-eval
+    languages: [javascript]
+    severity: ERROR
+    message: "eval executa texto como codigo. Substitua por uma operacao explicita."
+    pattern: eval(...)
